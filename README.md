@@ -14,4 +14,5 @@ Almost everything was written from scratch, including networking code.
 
 # TODO
 
-Maybe add online multiplayer? Who knows. Local multiplayer is barely functioning at the moment so I'll have to see.
+- Finish migrating the source to Python 3 (this was originally written in Python 2).
+- Maybe add online multiplayer? Who knows. Local multiplayer is barely functional at the moment, so I'll have to see.
