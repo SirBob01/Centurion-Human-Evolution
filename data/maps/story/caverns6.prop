@@ -1,0 +1,4 @@
+color[0,0,0]
+theme=Color
+next=caverns7
+liquids=[0,168,2256,576,water]
