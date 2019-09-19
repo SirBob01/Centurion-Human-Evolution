@@ -9,7 +9,8 @@ Take command of a human grunt as he fights his way through an intergalactic war 
 
 # Dependencies
 
-Just Pygame. Everything else was written from scratch, including networking code.
+Just Pygame. This project was just a learning exercise for me (started when I was about 13).
+Almost everything was written from scratch, including networking code.
 
 # TODO
 
