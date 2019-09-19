@@ -1,4 +1,4 @@
-<img src="./data/imgs/menu/logo.png" alt="Centurion" width="500"/>
+<img src="./data/imgs/menu/logo.png" alt="Centurion" width="300"/>
 
 A science fiction platform shooter inspired by Halo and Super Metroid.
 
