@@ -23,8 +23,8 @@ class Actor(AABB):
 		self.race = race
 		self.color = color
 
-		self.right_frames = [image('data/imgs/sprites/'+self.race+'/'+self.color+'/'+str(i)+'.png', resize=SPRITESIZE) for i in range(1, 5)]
-		self.left_frames = [flip(self.right_frames[i], True, False) for i in range(len(self.right_frames))]
+		self.right_frames = [image('data/imgs/sprites/'+self.race+'/'+self.color+'/'+str(i)+'.png', resize=SPRITESIZE) for i in xrange(1, 5)]
+		self.left_frames = [flip(self.right_frames[i], True, False) for i in xrange(len(self.right_frames))]
 		
 		self.right_arm = image('data/imgs/sprites/'+self.race+'/'+self.color+'/arm.png', resize=SPRITESIZE)
 		self.left_arm = flip(self.right_arm, True, False)
@@ -250,7 +250,7 @@ class Actor(AABB):
 		blit(camera, self.arm_rot, self.vector)
 		
 		if self.aiming:
-			for i in range(20):
+			for i in xrange(20):
 				v = self.calculateGrenadeTrajectory(i)
 				circle(camera, B_COLORS['YELLOW'], int(v.x), int(v.y), 5, outline=0)
 
@@ -386,7 +386,7 @@ class Actor(AABB):
 				
 				elif self.weapon.bullet == 'shotgun_round':
 					p = []
-					for i in range(self.weapon.usage):
+					for i in xrange(self.weapon.usage):
 						recoil = self.weapon.recoil*(i-2)
 						p.append(Projectile(self.name, self.race, self.color, self.facing, self.vector, self.weapon.angle+recoil, 'bullet', self.weapon.damage, self.weapon.bullet_vel))
 				
@@ -418,7 +418,7 @@ class Actor(AABB):
 					self.melee = False
 
 			if self.melee:				
-				for i in range(10):
+				for i in xrange(10):
 					particle_list.append(SwordParticle(self.vector, self.weapon.img))
 
 	def throw_grenade(self, grenadeList):
@@ -433,8 +433,8 @@ class Actor(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:
@@ -484,9 +484,9 @@ class Actor(AABB):
 		if debug:
 			if self.attacker != None:
 				if self.attacker == self:
-					print('Suicide!')
+					print 'Suicide!'
 				else:
-					print(self.attacker.name + ' attacked ' + self.name + '!')
+					print self.attacker.name + ' attacked ' + self.name + '!'
 
 	def new_weapon(self, w):
 		# Certain entity types can't collect certain weapons
@@ -666,8 +666,8 @@ class Bot(Actor):
 		top = max(0, int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))-1)
 		bottom = min(world.mh, int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))+1)
 
-		for y in range(top, bottom):
-			for x in range(left, right):
+		for y in xrange(top, bottom):
+			for x in xrange(left, right):
 				t = world.tiles[y][x]
 				if t != None:
 					if t.solid and t.type != 'slope' and self.state != 'idle':
@@ -681,11 +681,11 @@ class Bot(Actor):
 
 		# Make sure I don't fall down...
 		if self.facing == 'left':
-			column = [world.tiles[y][max(0, left)] for y in range(max(0, top+1), world.mh)]
+			column = [world.tiles[y][max(0, left)] for y in xrange(max(0, top+1), world.mh)]
 			if all(col == None or col.type == 'spike' for col in column):
 				self.state = 'moveright'
 		else:
-			column = [world.tiles[y][min(right, world.mw-1)] for y in range(max(0, top+1), world.mh)]
+			column = [world.tiles[y][min(right, world.mw-1)] for y in xrange(max(0, top+1), world.mh)]
 			if all(col == None or col.type == 'spike' for col in column):
 				self.state = 'moveleft'
 
@@ -919,7 +919,7 @@ class Flyer(AABB):
 		elif self.race == 'hydrax':
 			self.blood = B_COLORS['RED']
 
-		self.right_frames = [image('data/imgs/sprites/'+self.race+'/'+self.color+'/'+str(i)+'.png', resize=FLYSIZE) for i in range(1, 5)]
+		self.right_frames = [image('data/imgs/sprites/'+self.race+'/'+self.color+'/'+str(i)+'.png', resize=FLYSIZE) for i in xrange(1, 5)]
 		self.left_frames = [flip(i, True, False) for i in self.right_frames]
 
 		self.hp = 50
@@ -1077,8 +1077,8 @@ class Flyer(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:
@@ -1208,7 +1208,7 @@ class Flyer(AABB):
 class King(Bot):
 	def __init__(self, x, y, hp=1500, diff='normal'):
 		Bot.__init__(self, 'renegade', 'king', x, y, 'king', 0, 0, diff)
-		self.fly_right = [image('data/imgs/sprites/renegade/king/fly'+str(i)+'.png', resize=SPRITESIZE) for i in range(1, 5)]
+		self.fly_right = [image('data/imgs/sprites/renegade/king/fly'+str(i)+'.png', resize=SPRITESIZE) for i in xrange(1, 5)]
 		self.fly_left = [flip(i, True, False) for i in self.fly_right]
 
 		self.diff = diff
@@ -1336,7 +1336,7 @@ class King(Bot):
 		pass
 
 	def dropItem(self, item_list):
-		for i in range(5):
+		for i in xrange(5):
 			i = random.choice(['ammo', 'battery'])
 			item_list.append(Item(self.vector.x+random.randint(-30, 30), self.vector.y+random.randint(-30, 10), i))
 
@@ -1404,10 +1404,10 @@ class Squid(AABB):
 		self.color = 'squid'
 		self.blood = B_COLORS['ORANGE']
 
-		self.left_frames = [image('data/imgs/sprites/renegade/squid/'+str(i)+'.png', resize=(self.width, self.height)) for i in range(1, 5)]
+		self.left_frames = [image('data/imgs/sprites/renegade/squid/'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(1, 5)]
 		self.right_frames = [flip(i, True, False) for i in self.left_frames]
 
-		self.left_cooldown = [image('data/imgs/sprites/renegade/squid/cooldown'+str(i)+'.png', resize=(self.width, self.height)) for i in range(1, 5)]
+		self.left_cooldown = [image('data/imgs/sprites/renegade/squid/cooldown'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(1, 5)]
 		self.right_cooldown = [flip(i, True, False) for i in self.left_cooldown]
 
 		self.rotated = [i for i in self.right_frames]
@@ -1584,7 +1584,7 @@ class Squid(AABB):
 		pass
 
 	def dropItem(self, item_list):
-		for i in range(5):
+		for i in xrange(5):
 			i = random.choice(['ammo', 'battery'])
 			item_list.append(Item(self.vector.x+random.randint(-30, 30), self.vector.y+random.randint(-30, 10), i))
 
@@ -1708,10 +1708,10 @@ class Mecha(AABB):
 		self.color = 'mecha'
 		self.blood = B_COLORS['ORANGE']
 
-		self.right_frames = [image('data/imgs/sprites/renegade/mecha/'+str(i)+'.png', resize=(self.width, self.height)) for i in range(1, 5)]
+		self.right_frames = [image('data/imgs/sprites/renegade/mecha/'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(1, 5)]
 		self.left_frames = [flip(i, True, False) for i in self.right_frames]
 
-		self.cool_right = [image('data/imgs/sprites/renegade/mecha/cool'+str(i)+'.png', resize=(self.width, self.height)) for i in range(1, 4)]
+		self.cool_right = [image('data/imgs/sprites/renegade/mecha/cool'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(1, 4)]
 		self.cool_left = [flip(i, True, False) for i in self.cool_right]
 
 		self.right_arm = image('data/imgs/sprites/renegade/mecha/arm.png', resize=(self.width, self.height))
@@ -1884,8 +1884,8 @@ class Mecha(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:
@@ -1934,7 +1934,7 @@ class Mecha(AABB):
 		pass
 
 	def dropItem(self, item_list):
-		for i in range(5):
+		for i in xrange(5):
 			i = random.choice(['ammo', 'battery'])
 			item_list.append(Item(self.vector.x+random.randint(-30, 30), self.vector.y+random.randint(-30, 10), i))
 
@@ -2038,7 +2038,7 @@ class Mecha(AABB):
 			if self.onGround:
 				self.number_of_jumps += 1
 				v = Vector(self.vector.x, self.vector.y+self.height/2)
-				for i in range(5):
+				for i in xrange(5):
 					world.particles.append(Explosion(v, 'explode'))
 
 			if self.number_of_jumps > 10:
@@ -2089,7 +2089,7 @@ class HomingRocket(AABB):
 		self.color = 'rocket'
 		self.type = 'rocket'
 		
-		self.right = [image('data/imgs/sprites/renegade/rocket/'+str(i)+'.png', resize=(30, 25)) for i in range(1, 4)]
+		self.right = [image('data/imgs/sprites/renegade/rocket/'+str(i)+'.png', resize=(30, 25)) for i in xrange(1, 4)]
 		self.left = [flip(i, True, False) for i in self.right]
 		self.explosion = AABB(self.vector.x, self.vector.y, 50, 50)
 
@@ -2206,7 +2206,7 @@ class Generator(AABB):
 		self.race = race
 		self.type = 'destructable'
 		self.color = color
-		self.images = [image('data/imgs/sprites/generator/'+self.color+'/'+str(i)+'.png', resize=(self.width, self.height)) for i in range(3)]
+		self.images = [image('data/imgs/sprites/generator/'+self.color+'/'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(3)]
 
 		self.hp = hp
 		self.full = hp
@@ -2278,8 +2278,8 @@ class Generator(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:

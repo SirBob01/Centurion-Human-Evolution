@@ -16,7 +16,7 @@ class Star(AABB):
 		self.type = 'Star'
 		self.scroll_s = (self.width+self.height)/4
 		self.vel = Vector(self.size/2.0, 0)
-		self.image = random.choice([image('data/imgs/sprites/misc/star'+str(i)+'.png', resize=(self.width, self.height)) for i in range(4)])
+		self.image = random.choice([image('data/imgs/sprites/misc/star'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(4)])
 		self.timer = 0
 
 	def draw(self, camera):
@@ -79,9 +79,9 @@ class Backdrop(object):
 		self.brightness = 255
 
 		if self.type == 'Space':
-			self.items = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(20)]
+			self.items = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(20)]
 		if self.type == 'Agron':
-			self.items = [Rain(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(20)]
+			self.items = [Rain(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(20)]
 			self.image = image('data/imgs/bd/agron.png', resize=(SCREEN_W, SCREEN_H))
 		if self.type == 'Cave':
 			self.image = image('data/imgs/bd/cave.png', resize=(SCREEN_W, SCREEN_H))

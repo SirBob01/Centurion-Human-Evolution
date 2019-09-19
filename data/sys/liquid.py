@@ -30,13 +30,13 @@ class Liquid(AABB):
 		self.add_points(int(self.width/25))
 
 	def add_points(self, n):
-		for i in range(n):
+		for i in xrange(n):
 			self.points.append(AABB(float(i)/n * self.width + (self.vector.x-self.width/2), (self.vector.y-self.height/2-60), 1, 1))
 		self.points.append(AABB(self.width + (self.vector.x-self.width/2), (self.vector.y-self.height/2-60), 1, 1))
 
 	def update(self):
 		self.ticks += 1
-		for n in range(len(self.points)):
+		for n in xrange(len(self.points)):
 			point = self.points[n]
 			x = point.vector.y - (self.vector.y-self.height/2-60)
 			accel = -self.spring_const * x - self.damp*point.vel.y
@@ -48,7 +48,7 @@ class Liquid(AABB):
 		right = [0 for i in self.points]
 		spread = 0.25
 
-		for n in range(len(self.points)):
+		for n in xrange(len(self.points)):
 			if n > 0:
 				left[n] = spread * (self.points[n].vector.y - self.points[n-1].vector.y)
 				self.points[n-1].vel.y += left[n]
@@ -56,7 +56,7 @@ class Liquid(AABB):
 				right[n] = spread * (self.points[n].vector.y - self.points[n+1].vector.y)
 				self.points[n+1].vel.y += right[n]
 
-		for n in range(len(self.points)):
+		for n in xrange(len(self.points)):
 			if n > 0:
 				self.points[n-1].vector.y += left[n]
 			if n < len(self.points)-1:

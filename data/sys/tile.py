@@ -93,11 +93,11 @@ TILEDICT = {'1' : ('wall', 'alien', Color(150, 0, 100), 3),
 tileDir = 'data/imgs/tiles/'
 def load_tileSet(filename):
 	img = image(tileDir+filename+'.png')
-	img = scale(img, (int((img.get_width()/16)*TILESIZE), int(img.get_height()/16)*TILESIZE))
+	img = scale(img, ((img.get_width()/16)*TILESIZE, (img.get_height()/16)*TILESIZE))
 	w, h = img.get_size()
 	tiles = []
-	for y in range(int(h/TILESIZE)):
-		for x in range(int(w/TILESIZE)):
+	for y in range(h/TILESIZE):
+		for x in range(w/TILESIZE):
 			sub = subsurf(img, x*TILESIZE, y*TILESIZE, TILESIZE, TILESIZE)
 			tiles.append(sub)
 	return tiles

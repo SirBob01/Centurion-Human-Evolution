@@ -2,7 +2,7 @@
 ## Copyright (c) Keith Leonardo, NitroSquare Gaming;
 import time
 import sys
-import pickle
+import cPickle
 import pie.net.client
 import engine
 from world import *
@@ -100,12 +100,12 @@ class Client(pie.net.client.Client):
 		self.bio = data['meta'][1]
 		self.teams = data['meta'][2]
 
-		self.tiles = [[None for i in range(self.mw)] for z in range(self.mh)]
-		self.bg = [[None for i in range(self.mw)] for z in range(self.mh)]
-		self.fg = [[None for i in range(self.mw)] for z in range(self.mh)]
+		self.tiles = [[None for i in xrange(self.mw)] for z in xrange(self.mh)]
+		self.bg = [[None for i in xrange(self.mw)] for z in xrange(self.mh)]
+		self.fg = [[None for i in xrange(self.mw)] for z in xrange(self.mh)]
 
-		for x in range(self.mw):
-			for y in range(self.mh):
+		for x in xrange(self.mw):
+			for y in xrange(self.mh):
 				tile = data['tiles'][1][y][x]
 				bg = data['tiles'][0][y][x]
 				fg = data['tiles'][2][y][x]
@@ -122,9 +122,9 @@ class Client(pie.net.client.Client):
 				if fg != None:
 					self.fg[y][x] = Tile(fg[1], fg[4][0], fg[4][1], fg[2], fg[3])
 
-		self.weps = [None for i in range(len(data['weps']))]
-		self.items = [None for i in range(len(data['items']))]
-		self.generators = [None for i in range(len(data['generators']))]
+		self.weps = [None for i in xrange(len(data['weps']))]
+		self.items = [None for i in xrange(len(data['items']))]
+		self.generators = [None for i in xrange(len(data['generators']))]
 
 
 		for i, d in enumerate(data['weps']):
@@ -210,8 +210,8 @@ class Client(pie.net.client.Client):
 				else:
 					self.players[k].weapon = None
 
-		for g in range(len(self.generators)):
-			for g2 in range(len(data['generators'])):
+		for g in xrange(len(self.generators)):
+			for g2 in xrange(len(data['generators'])):
 				if self.generators[g].color == data['generators'][g2][4]:
 					self.generators[g].hp = data['generators'][g2][0]
 					self.generators[g].alive = data['generators'][g2][1]
@@ -425,8 +425,8 @@ class Client(pie.net.client.Client):
 			if endY > self.mh:
 				endY = self.mh
 
-			for th in range(startY, endY):
-				for tw in range(startX, endX):
+			for th in xrange(startY, endY):
+				for tw in xrange(startX, endX):
 					t = self.tiles[th][tw]
 					b = self.bg[th][tw]
 
@@ -444,7 +444,7 @@ class Client(pie.net.client.Client):
 			for e in self.players.values():
 				if e.alive:
 					if e.hurt:
-						for i in range(3):
+						for i in xrange(3):
 							self.particles.append(Blood(e.vector, e.vel, e.blood))
 
 					e.move(self.tiles)
@@ -549,7 +549,7 @@ class Client(pie.net.client.Client):
 			self.gamestate.engine.mouse.updateController(self.camera, self.field.get_width(), self.field.get_height())
 			self.gamestate.engine.mouse.draw(self.gamestate.engine.display)
 	
-		for y in range(len(self.messages)):
+		for y in xrange(len(self.messages)):
 			t = text(self.gamestate.engine.fonts['small'], self.messages[y][0], B_COLORS['WHITE'])
 			blit(self.gamestate.engine.display, t, (10, SCREEN_H-SCREEN_H/4-y*30), center=False)
 

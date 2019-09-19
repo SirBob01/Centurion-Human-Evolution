@@ -103,8 +103,8 @@ class BulletDisp(AABB):
 		self.bullet_name = bullet_name
 		self.bullet_angle = bullet_angle
 		self.bullet_facing = bullet_facing
-		self.images = [image('data/imgs/sprites/particles/'+self.bullet_name+str(i)+'.png', resize=(self.width, self.height)) for i in range(4)]
-		for i in range(len(self.images)):
+		self.images = [image('data/imgs/sprites/particles/'+self.bullet_name+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(4)]
+		for i in xrange(len(self.images)):
 			if self.bullet_facing == 'right':
 				self.images[i] = flip(self.images[i], True, False)
 			self.images[i] = rotate(self.images[i], self.bullet_angle)
@@ -127,7 +127,7 @@ class Explosion(AABB):
 		self.name = type
 
 		self.r = random.randint(60, 100)
-		self.images = [image('data/imgs/sprites/particles/'+self.name+str(i)+'.png', resize=(self.r, self.r)) for i in range(1, 8)]
+		self.images = [image('data/imgs/sprites/particles/'+self.name+str(i)+'.png', resize=(self.r, self.r)) for i in xrange(1, 8)]
 		
 		self.source_vector = source_vector
 		self.vector += Vector(random.randint(-self.r, self.r), random.randint(-self.r, self.r))
@@ -198,8 +198,8 @@ class Gore(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:
@@ -227,7 +227,7 @@ class Death:
 	def __init__(self, entity, s=ITEMSIZE*(3.0/4), l=200):
 		self.entity = entity
 		self.name = self.entity.race+'_'+self.entity.color
-		self.imgs = [self.name+str(i) for i in range(4)]
+		self.imgs = [self.name+str(i) for i in xrange(4)]
 		if entity.type == 'destructable':
 			self.blood = B_COLORS['ORANGE']
 		else:

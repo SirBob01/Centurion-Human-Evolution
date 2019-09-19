@@ -4,7 +4,7 @@ import random
 import time
 import socket
 import copy
-import threading
+import thread
 from server import *
 from client import *
 from world import *
@@ -67,7 +67,7 @@ class NewPlayer(State):
 class MainMenu(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.logo = image('data/imgs/menu/logo.png', resize=(434, 120))
 		self.version = text(self.engine.fonts['small'], 'Centurion {0}'.format(self.engine.version), B_COLORS['WHITE'])
 		self.splash = SplashText()
@@ -167,7 +167,7 @@ class Encyclopedia(State):
 class Settings(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'SETTINGS', B_COLORS['YELLOW'])
 
 		self.music = CheckBox((SCREEN_W/3, SCREEN_H/3-SCREEN_H/10), self, 'Music', default=Juke.canPlayMusic)
@@ -275,7 +275,7 @@ class Credits(State):
 class ProfileMenu(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'MY PROFILE', B_COLORS['YELLOW'])
 		self.name = text(self.engine.fonts['medium'], 'Name: {0}'.format(self.engine.profile.name), B_COLORS['WHITE'])
 		self.wins = text(self.engine.fonts['medium'], 'Wins: {0}'.format(self.engine.profile.wins), B_COLORS['WHITE'])
@@ -318,7 +318,7 @@ class ProfileMenu(State):
 class ChangeAvatar(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['medium'], "Edit your Avatar.", B_COLORS['YELLOW'])
 
 		self.player_color = 'red'
@@ -358,7 +358,7 @@ class ChangeAvatar(State):
 class ChangeProfileName(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.new = text(self.engine.fonts['medium'], "Change your profile name.", B_COLORS['YELLOW'])
 		self.newname = ''
 		self.inputbox = TextInput(self.engine.fonts['medium'], B_COLORS['WHITE'], 'New name')
@@ -395,7 +395,7 @@ class ChangeProfileName(State):
 class Multiplayer(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'MULTIPLAYER MENU', B_COLORS['YELLOW'])
 
 		# Buttons
@@ -428,7 +428,7 @@ class Multiplayer(State):
 class SelectMap(State):
 	def __init__(self, engine, maxtime, gametype):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'SELECT MAP', B_COLORS['YELLOW'])
 		self.maxtime = maxtime
 		self.gametype = gametype
@@ -440,7 +440,7 @@ class SelectMap(State):
 		self.prev = generatePreview(self.selected, 'multiplayer')
 		self.desc_font = font('Sentry', 45)
 
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			self.buttons.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.choices[y], self.engine.fonts['medium'], event=self.select, args=[self.choices[y]]))
 
 		self.buttons.extend([self.scroll.u, self.scroll.d])
@@ -480,7 +480,7 @@ class SelectMap(State):
 	def accept(self): self.engine.state = ServerGame(self.engine, self.selected, self.maxtime, self.gametype)
 	def updateButtons(self):
 		new = []
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			new.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.scroll.shown[y], self.engine.fonts['medium'], event=self.select, args=[self.scroll.shown[y]]))
 		self.buttons[0:len(new)] = new
 
@@ -488,7 +488,7 @@ class SelectMap(State):
 class JoinGame(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['medium'], "Join Game (ADDRESS-PORT)", B_COLORS['YELLOW'])
 		self.address = ''
 		self.inputbox = TextInput(self.engine.fonts['medium'], B_COLORS['WHITE'], 'Address')
@@ -699,7 +699,7 @@ class GameOver(State):
 		self.engine.display.fill(Color(20, 20, 30))
 		blit(self.engine.display, self.title, (SCREEN_W/2, SCREEN_H/10))
 
-		for y in range(len(self.players)):
+		for y in xrange(len(self.players)):
 			if self.players[y].color == 'grey':
 				color = Color(180, 180, 180)
 			elif self.players[y].color == 'monster':
@@ -748,14 +748,14 @@ class SelectGametype(State):
 	def __init__(self, engine, multiplayer=False):
 		State.__init__(self, engine)
 		self.title = text(self.engine.fonts['large'], 'CHOOSE GAMETYPE', B_COLORS['YELLOW'])
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.desc_font = font('Sentry', 45)
 		self.mult = multiplayer
 
-		self.choices = list(GAMETYPES.keys())
+		self.choices = GAMETYPES.keys()
 		self.gametype = self.choices[0]
 
-		for y in range(len(self.choices)):
+		for y in xrange(len(self.choices)):
 			self.buttons.append(Button((SCREEN_W/2-SCREEN_W/4, SCREEN_H/2-SCREEN_H/4+(y*60)), self.choices[y], self.engine.fonts['medium'], event=self.select, args=[self.choices[y]]))
 
 		self.buttons.append(Button((SCREEN_W/4, (SCREEN_H-SCREEN_H/8)), 'BACK', self.engine.fonts['medium'], event=self.mainmenu))
@@ -793,7 +793,7 @@ class EditVariables(State):
 	def __init__(self, engine, gametype='', multiplayer=False):
 		State.__init__(self, engine)
 		self.title = text(self.engine.fonts['large'], 'EDIT GAME VARIABLES', B_COLORS['YELLOW'])
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.gametype = gametype
 		self.text_gametype = text(self.engine.fonts['medium'], self.gametype, B_COLORS['WHITE'])
 		self.mult = multiplayer
@@ -841,7 +841,7 @@ class EditVariables(State):
 class SelectBotsMap(State):
 	def __init__(self, engine, numofbots, maxtime, gametype):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'SELECT MAP', B_COLORS['YELLOW'])
 		self.gametype = gametype
 
@@ -854,7 +854,7 @@ class SelectBotsMap(State):
 		self.numofbots = numofbots
 		self.maxtime = maxtime
 
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			self.buttons.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.choices[y], self.engine.fonts['medium'], event=self.select, args=[self.choices[y]]))
 
 		self.buttons.extend([self.scroll.u, self.scroll.d])
@@ -893,7 +893,7 @@ class SelectBotsMap(State):
 	def accept(self): self.engine.state = BotsGame(self.engine, self.selected, self.numofbots, self.maxtime, self.gametype)
 	def updateButtons(self):
 		new = []
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			new.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.scroll.shown[y], self.engine.fonts['medium'], event=self.select, args=[self.scroll.shown[y]]))
 		self.buttons[0:len(new)] = new
 
@@ -994,7 +994,7 @@ class BotsGame(State):
 class CampaignMenu(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'CAMPAIGN', B_COLORS['YELLOW'])	
 
 		self.buttons.append(Button((SCREEN_W/2, SCREEN_H/2-SCREEN_H/12), 'CONTINUE', self.engine.fonts['medium'], event=self.difficulty))
@@ -1024,7 +1024,7 @@ class CampaignMenu(State):
 class SelectLevel(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'SELECT MISSION', B_COLORS['YELLOW'])
 		self.lvls = {'The Awakening' : [['Defend the ship from boarding',
 										 'parties!'], 'awakening'],
@@ -1062,7 +1062,7 @@ class SelectLevel(State):
 		self.prev = generatePreview(self.lvls[self.selected][1]+'1', 'story')
 		self.desc_font = font('Sentry', 45)
 
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			self.buttons.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.choices[y], self.engine.fonts['medium'], event=self.select, args=[self.choices[y]]))
 
 		self.buttons.extend([self.scroll.u, self.scroll.d])
@@ -1085,7 +1085,7 @@ class SelectLevel(State):
 		blit(self.engine.display, self.prev, (2*SCREEN_W/3, SCREEN_H/2))
 
 		desc = self.lvls[self.selected][0]
-		for i in range(len(desc)):
+		for i in xrange(len(desc)):
 			blit(self.engine.display, text(self.desc_font, desc[i], B_COLORS['WHITE']), (SCREEN_W/2+SCREEN_W/6, SCREEN_H/4+self.desc_font.get_height()*i))
 
 		blit(self.engine.display, self.title, (SCREEN_W/2, SCREEN_H/10))
@@ -1105,7 +1105,7 @@ class SelectLevel(State):
 		self.engine.state = Difficulty(self.engine)
 	def updateButtons(self):
 		new = []
-		for y in range(len(self.scroll.shown)):
+		for y in xrange(len(self.scroll.shown)):
 			new.append(Button((SCREEN_W/4, SCREEN_H/3+(y*60)), self.scroll.shown[y], self.engine.fonts['medium'], event=self.select, args=[self.scroll.shown[y]]))
 		self.buttons[0:len(new)] = new
 
@@ -1113,7 +1113,7 @@ class SelectLevel(State):
 class Difficulty(State):
 	def __init__(self, engine):
 		State.__init__(self, engine)
-		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in range(150)]
+		self.stars = [Star(random.randint(0, SCREEN_W), random.randint(0, SCREEN_H)) for i in xrange(150)]
 		self.title = text(self.engine.fonts['large'], 'DIFFICULTY', B_COLORS['YELLOW'])
 		self.desc = {'Easy' : ['Laugh as your enemies explode into',
 							   'a pile of guts and gore!'],
@@ -1125,7 +1125,7 @@ class Difficulty(State):
 		self.selected = self.engine.profile.difficulty.title()
 		self.desc_font = font('Sentry', 45)
 
-		for y in range(len(self.options)):
+		for y in xrange(len(self.options)):
 			self.buttons.append(Button((SCREEN_W/4, SCREEN_H/4+(y*60)), self.options[y], self.engine.fonts['medium'], event=self.select, args=[self.options[y]]))
 
 		self.buttons.append(Button(((SCREEN_W/4), (7*SCREEN_H/8)), 'BACK', self.engine.fonts['medium'], event=self.back))
@@ -1143,7 +1143,7 @@ class Difficulty(State):
 				i.sel = True
 
 		desc = self.desc[self.selected]
-		for i in range(len(desc)):
+		for i in xrange(len(desc)):
 			blit(self.engine.display, text(self.desc_font, desc[i], B_COLORS['WHITE']), (SCREEN_W/2+SCREEN_W/6, SCREEN_H/4+self.desc_font.get_height()*i))
 
 		blit(self.engine.display, self.title, (SCREEN_W/2, SCREEN_H/10))
@@ -1170,7 +1170,7 @@ class Cutscene(State):
 	def __init__(self, engine, level_name):
 		State.__init__(self, engine)
 		self.level_name = level_name
-		self.images = [image('data/imgs/cs/'+self.level_name+str(i)+'.png', resize=(SCREEN_W, int(SCREEN_H*2.0/3))) for i in range(len(CUTSCENES[self.level_name]))]
+		self.images = [image('data/imgs/cs/'+self.level_name+str(i)+'.png', resize=(SCREEN_W, int(SCREEN_H*2.0/3))) for i in xrange(len(CUTSCENES[self.level_name]))]
 
 		self.index = 0
 		self.current_img = self.images[self.index]

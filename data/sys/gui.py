@@ -17,7 +17,7 @@ class HUD(object):
 		self.font = font('Sentry', 32)
 		self.grenades = image('data/imgs/menu/grenade.png', resize=(80, 83))
 
-		self.bg_left = Animate([image('data/imgs/menu/gui/hud/bg{0}.png'.format(i), resize=(500, 600)) for i in range(8)])
+		self.bg_left = Animate([image('data/imgs/menu/gui/hud/bg{0}.png'.format(i), resize=(500, 600)) for i in xrange(8)])
 		self.bg_right = Animate([flip(i, True, False) for i in self.bg_left.images])
 
 		self.maxwidth = SCREEN_W/3
@@ -54,7 +54,7 @@ class HUD(object):
 		self.health_bar.animate(camera, (SCREEN_W/2, SCREEN_H/7))
 
 		# Scale the health bar images according to actual player health
-		for i in range(len(self.health_bar.images)):
+		for i in xrange(len(self.health_bar.images)):
 			if i == 0:
 				self.health_bar.images[i] = scale(self.hb_in, (int((float(self.actor.hp)/self.actor.full)*self.maxwidth), self.maxheight))
 			if i == 1:
@@ -137,8 +137,8 @@ class TextInput(object):
 		else:
 			t = text(self.font, self.result, self.color)
 
-		box = image('data/imgs/menu/textbox.png', (int((len(self.question)+self.limit+2)*int(self.font.get_height()*0.5)), 
-													int(self.font.get_height()+self.font.get_height()/2)))
+		box = image('data/imgs/menu/textbox.png', ((len(self.question)+self.limit+2)*int(self.font.get_height()*0.5), 
+													self.font.get_height()+self.font.get_height()/2))
 		blit(camera, box, (pos[0]-self.font.get_height()/3, pos[1]-self.font.get_height()/4), center)
 		blit(camera, t, pos, center)
 
@@ -202,7 +202,7 @@ class CheckBox(AABB):
 	def __init__(self, pos, parent_state, label='', default=1):
 		AABB.__init__(self, pos[0], pos[1], 50, 50)
 		self.parent_state = parent_state
-		self.images = [image('data/imgs/menu/gui/check'+str(i)+'.png', resize=(self.width, self.height)) for i in range(2)]
+		self.images = [image('data/imgs/menu/gui/check'+str(i)+'.png', resize=(self.width, self.height)) for i in xrange(2)]
 		self.label = text(self.parent_state.engine.fonts['medium'], label, B_COLORS['WHITE'])
 		self.state = default
 		self.event = None
@@ -257,7 +257,7 @@ class TextScenes(object):
 	def render(self, camera, pos, loop=False, center=False):
 		line = self.quotes[self.index][0]
 		self.counter += 1
-		for n in range(len(line)):
+		for n in xrange(len(line)):
 			t = text(self.font, line[n], self.color)
 			if not center:
 				blit(camera, t, (pos[0], pos[1] + n * self.font.get_height()), center=False)
@@ -314,7 +314,7 @@ class ScrollText(object):
 		self.final[self.line] = self.t[self.line][:self.index]
 
 	def render(self, camera, pos, center=True):
-		for i in range(len(self.final)):
+		for i in xrange(len(self.final)):
 			t = text(self.font, self.final[i], self.color)
 			blit(camera, t, (pos[0], pos[1]+self.font.get_height()*i), center)
 
@@ -346,7 +346,7 @@ class SplashText(object):
 		self.font = font('Sentry', 45)
 		self.color = color
 
-		self.file = open('data/sys/splash.mtx', 'r+')
+		self.file = file('data/sys/splash.mtx', 'r+')
 		self.lines = self.file.readlines()
 		self.lines.append('{0} lines of code!'.format(self.get_lines_of_code()))
 		self.lines.append('It is the year {0}'.format(datetime.date.today().year))
@@ -399,7 +399,7 @@ class Avatar(object):
 
 class EditAvatar(object):
 	def __init__(self, pos, parent_state):
-		self.colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'grey']
+		self.colors = ['red', 'blue', 'green', 'yellow', 'purple', 'oxrange', 'pink', 'grey']
 		self.vector = Vector(*pos)
 		self.parent_state = parent_state
 
@@ -408,8 +408,8 @@ class EditAvatar(object):
 		self.gun = image('data/imgs/sprites/weapon/riffle.png', resize=(SPRITESIZE[0]*2, SPRITESIZE[1]*2))
 		self.arm = image('data/imgs/sprites/human/'+self.colors[self.index]+'/arm.png', resize=(SPRITESIZE[0]*2, SPRITESIZE[1]*2))
 
-		self.la = ImgButton([image('data/imgs/menu/left'+str(i)+'.png') for i in range(2)], (self.vector.x-SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.left)
-		self.ra = ImgButton([image('data/imgs/menu/right'+str(i)+'.png') for i in range(2)], (self.vector.x+SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.right)
+		self.la = ImgButton([image('data/imgs/menu/left'+str(i)+'.png') for i in xrange(2)], (self.vector.x-SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.left)
+		self.ra = ImgButton([image('data/imgs/menu/right'+str(i)+'.png') for i in xrange(2)], (self.vector.x+SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.right)
 
 		self.parent_state.buttons.extend([self.la, self.ra])
 
@@ -443,8 +443,8 @@ class SelectFromList(object):
 		self.unit = unit
 
 		self.index = self.list.index(default)
-		self.la = ImgButton([image('data/imgs/menu/left'+str(i)+'.png') for i in range(2)], (self.vector.x-SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.left)
-		self.ra = ImgButton([image('data/imgs/menu/right'+str(i)+'.png') for i in range(2)], (self.vector.x+SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.right)
+		self.la = ImgButton([image('data/imgs/menu/left'+str(i)+'.png') for i in xrange(2)], (self.vector.x-SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.left)
+		self.ra = ImgButton([image('data/imgs/menu/right'+str(i)+'.png') for i in xrange(2)], (self.vector.x+SPRITESIZE[0]*3.0/2, self.vector.y), 30, 30, self.right)
 		self.title = text(self.parent_state.engine.fonts['medium'], title, B_COLORS['YELLOW'])
 
 		self.parent_state.buttons.extend([self.la, self.ra])
@@ -469,19 +469,19 @@ class SelectFromList(object):
 
 
 class ScrollItems(object):
-	def __init__(self, items, range_of_items, x, y, item_height, parent_state):
+	def __init__(self, items, xrange_of_items, x, y, item_height, parent_state):
 		self.parent_state = parent_state
 		self.items = items
 		self.max = len(items)
 
 		self.start = 0
-		self.end = range_of_items
-		self.range = range_of_items
+		self.end = xrange_of_items
+		self.xrange = xrange_of_items
 
 		self.shown = self.items[self.start:self.end]
 
-		self.u = ImgButton([rotate(image('data/imgs/menu/left'+str(i)+'.png'), -90) for i in range(2)], (x, y-item_height-20), 30, 30, self.up)
-		self.d = ImgButton([rotate(image('data/imgs/menu/right'+str(i)+'.png'), -90) for i in range(2)], (x, y+(item_height*self.range)+50), 30, 30, self.down)
+		self.u = ImgButton([rotate(image('data/imgs/menu/left'+str(i)+'.png'), -90) for i in xrange(2)], (x, y-item_height-20), 30, 30, self.up)
+		self.d = ImgButton([rotate(image('data/imgs/menu/right'+str(i)+'.png'), -90) for i in xrange(2)], (x, y+(item_height*self.xrange)+50), 30, 30, self.down)
 
 	def updateShown(self):
 		self.shown = self.items[self.start:self.end]

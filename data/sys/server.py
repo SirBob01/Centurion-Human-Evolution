@@ -2,7 +2,7 @@
 ## Copyright (c) Keith Leonardo, NitroSquare Gaming;
 import sys
 import time
-import pickle
+import cPickle
 import socket
 import pie.net.server
 import engine
@@ -199,12 +199,12 @@ class Server(pie.net.server.Server):
 			self.world.generators.append(Generator(self.world.genspawn_red[0], self.world.genspawn_red[1], 'h', 'red'))
 			self.world.generators.append(Generator(self.world.genspawn_blue[0], self.world.genspawn_blue[1], 'h', 'blue'))
 
-		tiles = [[None for x in range(self.world.mw)] for y in range(self.world.mh)]
-		bg = [[None for x in range(self.world.mw)] for y in range(self.world.mh)]
-		fg = [[None for x in range(self.world.mw)] for y in range(self.world.mh)]
+		tiles = [[None for x in xrange(self.world.mw)] for y in xrange(self.world.mh)]
+		bg = [[None for x in xrange(self.world.mw)] for y in xrange(self.world.mh)]
+		fg = [[None for x in xrange(self.world.mw)] for y in xrange(self.world.mh)]
 
-		for x in range(self.world.mw):
-			for y in range(self.world.mh):
+		for x in xrange(self.world.mw):
+			for y in xrange(self.world.mh):
 				tiles[y][x] = generate_objects(self.world.tiles[y][x])
 				bg[y][x] = generate_objects(self.world.bg[y][x])
 				fg[y][x] = generate_objects(self.world.fg[y][x])
@@ -500,17 +500,17 @@ class Server(pie.net.server.Server):
 			else:
 				if l.name == 'rocket':
 					l.explode(actors+self.world.generators, self.world)
-					self.updateParticles([Explosion(l.vector, 'explode') for i in range(5)])
+					self.updateParticles([Explosion(l.vector, 'explode') for i in xrange(5)])
 				if l.name == 'rod':
 					l.explode(actors+self.world.generators, self.world)
-					self.updateParticles([Explosion(l.vector, 'fusion') for i in range(5)])
+					self.updateParticles([Explosion(l.vector, 'fusion') for i in xrange(5)])
 				self.world.bullets.remove(l)
 
 		for g in self.world.grenades:
 			if g.alive:
 				g.update(self.world.tiles)
 			else:
-				self.updateParticles([Explosion(g.vector, 'grenade') for i in range(5)])
+				self.updateParticles([Explosion(g.vector, 'grenade') for i in xrange(5)])
 				g.hurtActors(actors+self.world.generators, self.world)
 				self.world.grenades.remove(g)
 
@@ -520,7 +520,7 @@ class Server(pie.net.server.Server):
 			else:
 				if not g.respawning:
 					self.updateParticles([i for i in Death(g, s=50).gore])
-					self.updateParticles([Explosion(g.vector, 'explode') for i in range(5)])
+					self.updateParticles([Explosion(g.vector, 'explode') for i in xrange(5)])
 
 					for e in actors:
 						if e.name == g.attacker:

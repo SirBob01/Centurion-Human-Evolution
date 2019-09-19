@@ -7,7 +7,7 @@ import pygame.gfxdraw
 def image(filename, resize=None):
 	image = pygame.image.load(filename).convert_alpha()
 	if resize is not None:
-		image = scale(image, resize)
+		image = pygame.transform.scale(image, resize)
 	return image
 		
 def sound(filename):
@@ -54,22 +54,22 @@ def rotate(surf, angle):
 	return pygame.transform.rotate(surf, angle)
 
 def scale(surf, size):
-	return pygame.transform.scale(surf, [int(i) for i in size])
+	return pygame.transform.scale(surf, size)
 
 def flip(surf, xr, yr):
 	return pygame.transform.flip(surf, xr, yr)
 
 def subsurf(surf, x, y, width, height):
-	return surf.subsurface((int(x), int(y), int(width), int(height)))
+	return surf.subsurface((x, y, width, height))
 
 def rect(display, color, x, y, width, height, outline=0):
-	pygame.draw.rect(display, color, (int(x), int(y), int(width), int(height)), outline)
+	pygame.draw.rect(display, color, (x, y, width, height), outline)
 
 def circle(display, color, x, y, size, outline=0):
-	pygame.draw.circle(display, color, (int(x), int(y)), int(size), outline)
+	pygame.draw.circle(display, color, (x, y), size, outline)
 
 def aaCircle_outline(display, color, x, y, size):
-	pygame.gfxdraw.aacircle(display, int(x), int(y), int(size), color)
+	pygame.gfxdraw.aacircle(display, x, y, size, color)
 
 def oblong(display, color, x, y, width, height, outline=0):
 	pygame.draw.ellipse(display, color, (x, y, width, height), outline)

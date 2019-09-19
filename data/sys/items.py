@@ -73,8 +73,8 @@ class Item(AABB):
 		top = int(math.floor((self.vector.y-self.height/2.0)/TILESIZE))
 		bottom = int(math.floor((self.vector.y+self.height/2.0)/TILESIZE))
 
-		for y in range(top, bottom+1):
-			for x in range(left, right+1):
+		for y in xrange(top, bottom+1):
+			for x in xrange(left, right+1):
 				if 0 <= y < len(tiles) and 0 <= x < len(tiles[0]):
 					t = tiles[y][x]
 					if t != None:

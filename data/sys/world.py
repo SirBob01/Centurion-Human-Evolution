@@ -397,8 +397,8 @@ def generatePreview(map, type):
 
 	preview = surface(w, h)
 	preview.fill(color)
-	for y in range(w):
-		for x in range(h):
+	for y in xrange(w):
+		for x in xrange(h):
 			if lines[x][y] not in 'QWERTYUIOPASDFGHJKLZXCVBNMgxrp> \n':
 				preview.set_at((y, x), TILEDICT[lines[x][y]][2])
 	s = scale(preview, (w*10, h*10))
@@ -426,9 +426,9 @@ class GameMap(object):
 		self.height = 0
 
 		# Lists that store all the game objects
-		self.tiles = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.fg = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.bg = [[None for i in range(self.mw)] for i in range(self.mh)]
+		self.tiles = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.fg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.bg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
 		self.liquids = []
 		self.entities = []
 		self.bullets = []
@@ -481,13 +481,13 @@ class GameMap(object):
 
 
 		self.lines = map_file.readlines()
-		for i in range(len(self.lines)):
+		for i in xrange(len(self.lines)):
 			self.mw = len(self.lines[i])
 		self.mh = len(self.lines)
 
-		self.tiles = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.bg = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.fg = [[None for i in range(self.mw)] for i in range(self.mh)]
+		self.tiles = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.bg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.fg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
 
 		self.width = self.mw*TILESIZE
 		self.height = self.mh*TILESIZE
@@ -511,8 +511,8 @@ class GameMap(object):
 				self.defend_structures = True
 
 		# Generate the tiles
-		for x in range(self.mw):
-			for y in range(self.mh):
+		for x in xrange(self.mw):
+			for y in xrange(self.mh):
 				if self.lines[y][x] in TILEDICT:
 					t_id = self.calcTileNum(x, y)
 					if TILEDICT[self.lines[y][x]][0] == 'grav':
@@ -661,8 +661,8 @@ class GameMap(object):
 		if endY > self.mh:
 			endY = self.mh
 
-		for th in range(startY, endY):
-			for tw in range(startX, endX):
+		for th in xrange(startY, endY):
+			for tw in xrange(startX, endX):
 				t = self.tiles[th][tw]
 				b = self.bg[th][tw]
 
@@ -704,8 +704,8 @@ class GameMap(object):
 			if onScreenOffset(l, self.offset):
 				l.render(self.field)
 
-		for th in range(startY, endY):
-			for tw in range(startX, endX):
+		for th in xrange(startY, endY):
+			for tw in xrange(startX, endX):
 				t = self.fg[th][tw]
 				if t != None and t.alive:
 					t.draw(self.field)
@@ -760,15 +760,15 @@ class StoryLevel(GameMap):
 		self.camera = Vector(self.width-self.offset.x, self.height-self.offset.y)
 
 		self.diff = self.profile.difficulty
-		for x in range(self.mw):
-			for y in range(self.mh):
+		for x in xrange(self.mw):
+			for y in xrange(self.mh):
 				if self.lines[y][x] == 'D':
 					if self.target == None:
 						t = Actor('human', self.profile.color, x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2, name=self.profile.name, d=self.diff)
 						t.bag.grenades = self.profile.grenades
 						t.bag.weapons = [Gun(i[0], t.vector, t.angle, i[1]) if len(i) > 1 else Blade(i[0], t.vector, t.angle) for i in self.profile.weapons]
 
-						for w1 in range(len(self.profile.weapons)):
+						for w1 in xrange(len(self.profile.weapons)):
 							wep = t.bag.weapons[w1]
 							if wep.type == 'gun':
 								if self.name.strip('abcdefghijklmnopqrstuvwxyz') == '1':
@@ -920,7 +920,7 @@ class StoryLevel(GameMap):
 				for i in Death(g, s=50).gore:
 					self.particles.append(i)
 
-				for i in range(10):
+				for i in xrange(10):
 					self.particles.append(Explosion(g.vector, 'explode'))
 				Juke.play('boom', 0.4*stereo_pos(self.target.vector, g.vector))
 				g.dropItem(self.items)
@@ -928,8 +928,8 @@ class StoryLevel(GameMap):
 				self.generators.remove(g)
 				
 
-		for th in range(self.mh):
-			for tw in range(self.mw):
+		for th in xrange(self.mh):
+			for tw in xrange(self.mw):
 				if 0 <= th < self.mh and 0 <= tw < self.mw:
 					t = self.tiles[th][tw]
 					if t != None:
@@ -960,8 +960,8 @@ class StoryLevel(GameMap):
 
 							if t.type == 'util':
 								if collideAABB(self.target, t) and t.name.strip('0123456789') == 'switch' and t.state == 1:
-									for th2 in range(self.mh):
-										for tw2 in range(self.mw):
+									for th2 in xrange(self.mh):
+										for tw2 in xrange(self.mw):
 											if 0 <= th2 < self.mh and 0 <= tw2 < self.mw:
 												t2 = self.tiles[th2][tw2]
 												if t2 != None and t2.name.strip('1234567890') in ['doorAlien', 'doorStruc', 'doorHydrax']:
@@ -985,7 +985,7 @@ class StoryLevel(GameMap):
 			if g.alive:
 				g.update(self.tiles)
 			else:
-				for i in range(5):
+				for i in xrange(5):
 				   self.particles.append(Explosion(g.vector, 'grenade'))
 				g.hurtActors(self.entities+self.generators, self)
 				Juke.play('nades', 0.4*stereo_pos(self.target.vector, g.vector))
@@ -1041,7 +1041,7 @@ class StoryLevel(GameMap):
 						e.throw_grenade(self.grenades)
 
 					if e.hurt:
-						for i in range(3):
+						for i in xrange(3):
 							self.particles.append(Blood(e.vector, e.vel, e.blood))
 
 				if e.color == 'mecha':
@@ -1056,7 +1056,7 @@ class StoryLevel(GameMap):
 				if type(e) == SelfDestruct:
 					if e.race == 'hydrax':
 						e.explode(self.entities+self.generators, self)
-						for i in range(5):
+						for i in xrange(5):
 							self.particles.append(Explosion(e.vector, 'explode'))
 						Juke.play('rod', 0.4*stereo_pos(self.target.vector, e.vector))
 						self.entities.remove(e)
@@ -1065,14 +1065,14 @@ class StoryLevel(GameMap):
 					if e.type == 'rocket':
 						e.dropItem(self.items)
 						e.explode(self.entities, self)
-						for i in range(5):
+						for i in xrange(5):
 							self.particles.append(Explosion(e.vector, 'explode'))
 						Juke.play('rod', 0.4*stereo_pos(self.target.vector, e.vector))
 						self.entities.remove(e)
 				else:
 					if not e.respawning:
 						# Gory and explosive death
-						for i in range(5):
+						for i in xrange(5):
 							self.particles.append(Blood(e.vector, e.vel, e.blood))
 
 						if e.width > SPRITESIZE[0] or e.height > SPRITESIZE[1]:
@@ -1124,12 +1124,12 @@ class StoryLevel(GameMap):
 				self.particles.append(BulletDisp(l.name, l.angle, l.facing, l.vector.x, l.vector.y))
 				if l.name == 'rocket':
 					l.explode(self.entities+self.generators, self)
-					for i in range(5):
+					for i in xrange(5):
 						self.particles.append(Explosion(l.vector, 'explode'))
 					Juke.play('boom', 0.4*stereo_pos(self.target.vector, l.vector))
 				if l.name == 'rod':
 					l.explode(self.entities+self.generators, self)
-					for i in range(5):
+					for i in xrange(5):
 						self.particles.append(Explosion(l.vector, 'fusion'))
 					Juke.play('rod', 0.4*stereo_pos(self.target.vector, l.vector))
 				self.bullets.remove(l)
@@ -1166,8 +1166,8 @@ class BotMap(GameMap):
 		self.gametype_attributes()
 
 	def worldSpecific(self, name):
-		for x in range(self.mw):
-			for y in range(self.mh):
+		for x in xrange(self.mw):
+			for y in xrange(self.mh):
 				if self.lines[y][x] == 'R':
 					self.spawns.append((x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2))
 					self.red_spawns.append((x*TILESIZE+TILESIZE/2, y*TILESIZE+TILESIZE/2))
@@ -1206,13 +1206,13 @@ class BotMap(GameMap):
 
 		nms = random.sample(botnames_copy, self.numofbots)
 		ids = random.sample(range(1, 301), self.numofbots)
-		for i in range(self.numofbots):
+		for i in xrange(self.numofbots):
 			if random.randint(0, 1):
 				names.append(nms[i]+str(ids[i]))
 			else:
 				names.append(nms[i])
 
-		for i in range(self.numofbots):
+		for i in xrange(self.numofbots):
 			s = random.choice(self.spawns)
 			actor = Bot('human', colors[i], s[0], s[1], names[i], 0, 0)
 			self.entities.append(actor)
@@ -1282,7 +1282,7 @@ class BotMap(GameMap):
 					for i in Death(g, s=50).gore:
 						self.particles.append(i)
 
-					for i in range(10):
+					for i in xrange(10):
 						self.particles.append(Explosion(g.vector, 'explode'))
 					Juke.play('boom', 0.4*stereo_pos(self.target.vector, g.vector))
 
@@ -1306,7 +1306,7 @@ class BotMap(GameMap):
 			if g.alive:
 				g.update(self.tiles)
 			else:
-				for i in range(5):
+				for i in xrange(5):
 				   self.particles.append(Explosion(g.vector, 'grenade'))
 				g.hurtActors(self.entities+self.generators, self)
 				Juke.play('nades', 0.4*stereo_pos(self.target.vector, g.vector))
@@ -1353,7 +1353,7 @@ class BotMap(GameMap):
 					e.throw_grenade(self.grenades)
 
 				if e.hurt:
-					for i in range(3):
+					for i in xrange(3):
 						self.particles.append(Blood(e.vector, e.vel, e.blood))
 
 				if e.invunerable:
@@ -1365,7 +1365,7 @@ class BotMap(GameMap):
 			else:
 				if not e.respawning:
 					# Gory and explosive death
-					for i in range(5):
+					for i in xrange(5):
 						self.particles.append(Blood(e.vector, e.vel, e.blood))
 					for i in Death(e).gore:
 						self.particles.append(i)
@@ -1502,12 +1502,12 @@ class BotMap(GameMap):
 				self.particles.append(BulletDisp(l.name, l.angle, l.facing, l.vector.x, l.vector.y))
 				if l.name == 'rocket':
 					l.explode(self.entities+self.generators, self)
-					for i in range(5):
+					for i in xrange(5):
 						self.particles.append(Explosion(l.vector, 'explode'))
 					Juke.play('boom', 0.4*stereo_pos(self.target.vector, l.vector))
 				if l.name == 'rod':
 					l.explode(self.entities+self.generators, self)
-					for i in range(5):
+					for i in xrange(5):
 						self.particles.append(Explosion(l.vector, 'fusion'))
 					Juke.play('rod', 0.4*stereo_pos(self.target.vector, l.vector))
 				self.bullets.remove(l)
@@ -1549,7 +1549,7 @@ class BotMap(GameMap):
 				t = text(self.engine.fonts['medium'], 'Respawning in {0}...'.format(respawn_time), B_COLORS['YELLOW'])
 				blit(self.engine.display, t, (SCREEN_W/2, SCREEN_H/2))
 
-		for y in range(len(self.messages)):
+		for y in xrange(len(self.messages)):
 			t = text(self.engine.fonts['small'], self.messages[y][0], B_COLORS['WHITE'])
 			blit(self.engine.display, t, (10, SCREEN_H-SCREEN_H/4-y*30), center=False)
 
@@ -1576,9 +1576,9 @@ class MultiplayerWorld(object):
 			self.mw = len(i)
 		self.mh = len(self.lines)
 
-		self.tiles = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.fg = [[None for i in range(self.mw)] for i in range(self.mh)]
-		self.bg = [[None for i in range(self.mw)] for i in range(self.mh)]
+		self.tiles = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.fg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
+		self.bg = [[None for i in xrange(self.mw)] for i in xrange(self.mh)]
 		self.bullets = []
 		self.grenades = []
 		self.items = []
@@ -1677,8 +1677,8 @@ class MultiplayerWorld(object):
 		return id
 
 	def generate(self):
-		for x in range(self.mw):
-			for y in range(self.mh):
+		for x in xrange(self.mw):
+			for y in xrange(self.mh):
 				if self.lines[y][x] in TILEDICT:
 					t_id = self.calcTileNum(x, y)
 					if TILEDICT[self.lines[y][x]][0] == 'grav':
