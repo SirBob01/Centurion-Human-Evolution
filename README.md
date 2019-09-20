@@ -7,6 +7,10 @@ Take command of a human grunt as he fights his way through an intergalactic war 
 - Play against bots in deathmatch arenas.
 - Challenge your friends over local multiplayer.
 
+<img src="./data/help/screenshots/shot_7.png" alt="Screenshot 1" width=500/>
+<img src="./data/help/screenshots/shot_0.png" alt="Screenshot 1" width=500/>
+<img src="./data/help/screenshots/shot_3.png" alt="Screenshot 1" width=500/>
+
 # Dependencies
 
 Just Pygame. This project was just a learning exercise for me (started when I was about 13).
