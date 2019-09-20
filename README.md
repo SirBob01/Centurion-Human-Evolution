@@ -8,8 +8,8 @@ Take command of a human grunt as he fights his way through an intergalactic war 
 - Challenge your friends over local multiplayer.
 
 <img src="./data/help/screenshots/shot_7.png" alt="Screenshot 1" width=500/>
-<img src="./data/help/screenshots/shot_0.png" alt="Screenshot 1" width=500/>
-<img src="./data/help/screenshots/shot_3.png" alt="Screenshot 1" width=500/>
+<img src="./data/help/screenshots/shot_0.png" alt="Screenshot 2" width=500/>
+<img src="./data/help/screenshots/shot_3.png" alt="Screenshot 3" width=500/>
 
 # Dependencies
 
